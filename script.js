@@ -1,4 +1,5 @@
 const refreshBtn = document.getElementById("refresh");
+const validateBtn = document.getElementById("validate");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 ctx.fillStyle = "black";
@@ -34,6 +35,10 @@ class Tile {
 
         this.i = i;
         this.j = j;
+    }
+
+    isAtRightPlace() {
+        return this.i == this.init_i && this.j == this.init_j;
     }
 
     changePosTo(key) {
@@ -81,6 +86,16 @@ class Tiles {
         this.hollow.drawAtCurrentPos();
     }
 
+    isSolved() {
+        let res = true;
+        
+        for(const tile of this.tiles.values()) {
+            res = res && tile.isAtRightPlace();
+        }
+
+        return res;
+    }
+
     availableToSwitch() {
         const res = [];
         const toCheck = [[1, 0], [-1, 0], [0, 1], [0, -1]];
@@ -118,6 +133,7 @@ class Tiles {
 }
 
 image.onload = () => {
+    validateBtn.style.display = "block";
     const ratio = image.height/image.width;
     const new_height = new_width*ratio
     ctx.canvas.width = new_width;
@@ -142,9 +158,21 @@ image.onload = () => {
         }
     }
 
+    function launchConfettiOnSolve() {
+        if(tiles.isSolved()) {
+            const jsConfetti = new JSConfetti();
+
+            jsConfetti.addConfetti();
+
+            validateBtn.style.display = "none";
+        }
+    }
+
     canvas.addEventListener("click", mouseClickSwitch);
+    validateBtn.addEventListener("click", launchConfettiOnSolve);
 
     refreshBtn.addEventListener("click", () => {
+        validateBtn.removeEventListener("click", launchConfettiOnSolve);
         canvas.removeEventListener("click", mouseClickSwitch);
         loadImage();
     });
