@@ -2,8 +2,22 @@ html {
     background-color: #121212;
 }
 
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+canvas, #refresh {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#refresh {
+    margin-top: 2rem;
+    padding: 0.5rem;
+    width: 10rem;
+    background-color: black;
+    border-radius: 0.2rem;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+
+#refresh:hover {
+    background-color: rgb(26, 26, 26);
 }

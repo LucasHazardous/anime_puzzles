@@ -1,3 +1,4 @@
+const refreshBtn = document.getElementById("refresh");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 ctx.fillStyle = "black";
@@ -5,21 +6,24 @@ ctx.fillStyle = "black";
 let image = new Image();
 const new_width = 400;
 
-fetch("https://nekos.best/api/v2/waifu").then(res => res.json()).then(res => {
-    image.src = res['results'][0]['url'];
-});
-
 const pieces = new Map();
-let cols = 3;
-let rows = 5;
+const cols = 3;
+const rows = 5;
 
 let tile_w;
 let tile_h;
 let img_w;
 let img_h;
 
-function chooseRandomElement(arr) {
+function loadImage() {
+    fetch("https://nekos.best/api/v2/waifu").then(res => res.json()).then(res => {
+        image.src = res['results'][0]['url'];
+    });
+}
 
+loadImage();
+
+function chooseRandomElement(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
@@ -120,11 +124,18 @@ function divide() {
         switchTiles(chooseRandomElement(availableToSwitch()));
     }
 
-    canvas.addEventListener("click", (e) => {
+    function mouseClickSwitch(e) {
         const chosenTileKey = detectTile(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-        console.log(chosenTileKey);
+
         if(availableToSwitch().includes(chosenTileKey)) {
             switchTiles(chosenTileKey);
         }
+    }
+
+    canvas.addEventListener("click", mouseClickSwitch);
+
+    refreshBtn.addEventListener("click", () => {
+        canvas.removeEventListener("click", mouseClickSwitch);
+        loadImage();
     });
 }
