@@ -122,6 +122,12 @@ class Tiles {
 
         this.hollowKey = chosenTileKey;
 
+        return chosenTile;
+    }
+
+    switchWithHollowAndDraw(chosenTileKey) {
+        const chosenTile = this.switchWithHollow(chosenTileKey);
+
         this.hollow.drawAtCurrentPos();
         chosenTile.drawAtCurrentPos();
     }
@@ -129,6 +135,10 @@ class Tiles {
     randomize() {
         for(let i = 0; i < 100; i++) {
             this.switchWithHollow(chooseRandomElement(this.availableToSwitch()));
+        }
+
+        for(const tile of this.tiles.values()) {
+            tile.drawAtCurrentPos();
         }
     }
 }
@@ -155,7 +165,7 @@ image.onload = () => {
         const chosenTileKey = Tile.getTileByCoords(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
 
         if(tiles.availableToSwitch().includes(chosenTileKey)) {
-            tiles.switchWithHollow(chosenTileKey);
+            tiles.switchWithHollowAndDraw(chosenTileKey);
         }
     }
 
