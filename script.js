@@ -1,3 +1,4 @@
+const jsConfetti = new JSConfetti();
 const refreshBtn = document.getElementById("refresh");
 const validateBtn = document.getElementById("validate");
 const canvas = document.getElementById("canvas");
@@ -160,11 +161,13 @@ image.onload = () => {
 
     function launchConfettiOnSolve() {
         if(tiles.isSolved()) {
-            const jsConfetti = new JSConfetti();
-
             jsConfetti.addConfetti();
 
+            canvas.removeEventListener("click", mouseClickSwitch);
+
             validateBtn.style.display = "none";
+
+            ctx.drawImage(image, 0, 0, image.width, image.height, 0, 0, new_width, new_height);
         }
     }
 
