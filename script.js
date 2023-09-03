@@ -6,7 +6,7 @@ const ctx = canvas.getContext("2d");
 ctx.fillStyle = "black";
 
 let image = new Image();
-const new_width = 400;
+const new_width = Math.min(400, screen.width-20);
 
 const cols = 3;
 const rows = 5;
@@ -19,7 +19,7 @@ let img_h;
 function loadImage() {
     fetch("https://nekos.best/api/v2/waifu").then(res => res.json()).then(res => {
         image.src = res['results'][0]['url'];
-    });
+    }).catch(e => console.log(e));
 }
 
 loadImage();
