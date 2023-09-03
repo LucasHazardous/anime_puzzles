@@ -121,15 +121,14 @@ class Tiles {
         this.tiles.set(chosenTileKey, this.hollow);
 
         this.hollowKey = chosenTileKey;
-
-        return chosenTile;
     }
 
     switchWithHollowAndDraw(chosenTileKey) {
-        const chosenTile = this.switchWithHollow(chosenTileKey);
+        const hollowKey = this.hollowKey;
+        this.switchWithHollow(chosenTileKey);
 
         this.hollow.drawAtCurrentPos();
-        chosenTile.drawAtCurrentPos();
+        this.tiles.get(hollowKey).drawAtCurrentPos();
     }
 
     randomize() {
