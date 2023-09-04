@@ -2,7 +2,7 @@ html {
     background-color: #121212;
 }
 
-canvas, button {
+canvas, button, .select-wrapper {
     margin-left: auto;
     margin-right: auto;
     display: block;
@@ -20,4 +20,23 @@ button {
 
 button:hover {
     background-color: rgb(26, 26, 26);
+}
+
+.select-wrapper {
+    width: 10rem;
+    margin-top: 2rem;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 0.4rem;
+    width: 100%;
+    height: 100%;
+    font-size: 1rem;
+    background-color: black;
+    border: 1px solid gray;
+    border-radius: 0.25rem;
+    color: gray;
+    cursor: pointer;
 }

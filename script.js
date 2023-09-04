@@ -1,5 +1,6 @@
 const jsConfetti = new JSConfetti();
 const refreshBtn = document.getElementById("refresh");
+const selectCategory = document.getElementById("selectCategory");
 const validateBtn = document.getElementById("validate");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -17,7 +18,7 @@ let img_w;
 let img_h;
 
 function loadImage() {
-    fetch("https://nekos.best/api/v2/waifu").then(res => res.json()).then(res => {
+    fetch("https://nekos.best/api/v2/" + selectCategory.value).then(res => res.json()).then(res => {
         image.src = res['results'][0]['url'];
     }).catch(e => console.log(e));
 }
