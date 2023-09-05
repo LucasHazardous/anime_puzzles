@@ -19,9 +19,13 @@ let img_w;
 let img_h;
 
 function loadImage() {
-    fetch("https://nekos.best/api/v2/" + selectCategory.value).then(res => res.json()).then(res => {
-        image.src = res['results'][0]['url'];
-    }).catch(e => console.log(e));
+    if(selectCategory.value.startsWith("_")) {
+        image.src = "img/" + selectCategory.value.slice(1);
+    } else {
+        fetch("https://nekos.best/api/v2/" + selectCategory.value).then(res => res.json()).then(res => {
+            image.src = res['results'][0]['url'];
+        }).catch(e => console.log(e));    
+    }
 }
 
 loadImage();
