@@ -11,6 +11,7 @@ const new_width = Math.min(400, screen.width-20);
 
 const cols = 3;
 const rows = 5;
+const randomization_moves = 100;
 
 let tile_w;
 let tile_h;
@@ -75,9 +76,8 @@ class Tiles {
 
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
-                const key = String([i,j]);
                 const newTile = new Tile(i, j);
-                this.tiles.set(key, newTile);
+                this.tiles.set(String([i,j]), newTile);
                 newTile.drawAtCurrentPos();
             }
         }
@@ -88,14 +88,12 @@ class Tiles {
         this.hollow.drawAtCurrentPos();
     }
 
-    isSolved() {
-        let res = true;
-        
+    isSolved() {    
         for(const tile of this.tiles.values()) {
-            res = res && tile.isAtRightPlace();
+            if(!tile.isAtRightPlace()) return false;
         }
 
-        return res;
+        return true;
     }
 
     availableToSwitch() {
@@ -133,7 +131,7 @@ class Tiles {
     }
 
     randomize() {
-        for(let i = 0; i < 100; i++) {
+        for(let i = 0; i < randomization_moves; i++) {
             this.switchWithHollow(chooseRandomElement(this.availableToSwitch()));
         }
 
